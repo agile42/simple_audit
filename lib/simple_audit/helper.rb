@@ -5,7 +5,7 @@ module SimpleAudit #:nodoc:
     
     def render_audits(audited_model)
       return '' unless audited_model.respond_to?(:audits)
-      audits = (audited_model.audits || []).dup.sort{|a,b| b.created_at <=> a.created_at}
+      audits = (audited_model.audits || []).dup.sort{|a,b| b.id <=> a.id}
       res = ''
       audits.each_with_index do |audit, index|
         older_audit = audits[index + 1]
