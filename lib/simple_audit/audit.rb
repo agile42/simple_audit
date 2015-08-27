@@ -14,9 +14,8 @@ module SimpleAudit #:nodoc:
     #     :key_2 => [<value_in_other_audit>, <value_in_this_audit>],
     #   } 
     def delta(other_audit)
-    
+      return {} if self.change_log.is_a?(String) || other_audit.change_log.is_a?(String)
       return self.change_log if other_audit.nil?
-    
       {}.tap do |d|
         
         # first for keys present only in this audit

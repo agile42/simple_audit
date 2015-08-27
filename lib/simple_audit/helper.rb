@@ -24,7 +24,11 @@ module SimpleAudit #:nodoc:
                 content_tag(:span, v.first, :class => 'previous')
               end
             else
-              audit.change_log.sort{|x,y| audited_model.class.human_attribute_name(x.first) <=> audited_model.class.human_attribute_name(y.first)}.reject{|k, v| v.blank?}.collect {|k, v| "\n#{audited_model.class.human_attribute_name(k)}: #{v}"}
+              if audit.change_log.is_a?(String)
+                []
+              else                
+                audit.change_log.sort{|x,y| audited_model.class.human_attribute_name(x.first) <=> audited_model.class.human_attribute_name(y.first)}.reject{|k, v| v.blank?}.collect {|k, v| "\n#{audited_model.class.human_attribute_name(k)}: #{v}"}
+              end
             end
             raw changes.join
           end        
